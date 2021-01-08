@@ -25,7 +25,7 @@ Let op! Het is niet toegestaan om bestaande modules te importeren en te
 
 # Vul hier je naam, klas en studentnummer in
 naam = "Taran Singh"
-klas = ""
+klas = "SG26"
 studentnummer = 1789254
 
 
@@ -41,8 +41,6 @@ def rnge(lst):
 
 
 def median(lst):
-    """ Retourneer de mediaan (float) van de lijst lst. """
-
     sortedList = sorted(lst)
     mid = len(lst) // 2
 
@@ -55,20 +53,29 @@ def median(lst):
 
 
 def q1(lst):
-    """
-    Retourneer het eerste kwartiel Q1 (float) van de lijst lst.
-    Tip: maak gebruik van median()
-    """
-    return
+    sortedlst = sorted(lst)
+    n = (len(sortedlst) // 2)
+    del sortedlst[n:]
+    q1Mediaan = median(sortedlst)
+    return q1Mediaan
 
 
 def q3(lst):
-    """ Retourneer het derde kwartiel Q3 (float) van die lijst lst. """
-    return
+    if (len(lst) % 2) == 0:
+        sortedlst = sorted(lst)
+        n = (len(sortedlst) // 2)
+        del sortedlst[:n]
+        q3Mediaan = median(sortedlst)
+        return q3Mediaan
+    else:
+        sortedlst = sorted(lst)
+        n = (len(sortedlst) // 2) + 1
+        del sortedlst[:n]
+        q3Mediaan = median(sortedlst)
+        return q3Mediaan
 
 
 def var(lst):
-    """ Retourneer de variantie (float) van de lijst lst. """
     squaredList = []
     avg = mean(lst)
 
@@ -93,21 +100,35 @@ def std(lst):
 
 
 def freq(lst):
-    """
-    Retourneer een dictionary met als keys de waardes die voorkomen in lst en
-    als value het aantal voorkomens van die waarde.
-
-    Examples:
-        >>> freq([0, 0, 4, 5])
-        {0: 2, 4: 1, 5: 1}
-    """
-    freqs = dict()
+    freqs = {x: lst.count(x) for x in lst}
     return freqs
 
 
 def modes(lst):
-    """ Retourneer een gesorteerde lijst (list) van de modi van lijst lst. """
     modi = []
+    modus_dict = {}
+
+    for x in lst:
+        count = lst.count(x)
+        if x not in modus_dict.keys():
+            modus_dict[x] = count
+    max_count = 0
+
+    for key in modus_dict:
+        if modus_dict[key] >= max_count:
+            max_count = modus_dict[key]
+    modus_keys = []
+
+    for corr_key, count_value in modus_dict.items():
+        if modus_dict[corr_key] == max_count:
+            modus_keys.append(corr_key)
+
+    if max_count == 1 and len(modus_dict) != 1:
+        modi.extend(lst)
+    else:
+        modus_keys = sorted(modus_keys)
+        modi.extend(modus_keys)
+
     return sorted(modi)
 
 
